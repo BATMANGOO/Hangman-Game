@@ -1,10 +1,11 @@
 'use strict';
 import Home from "./home.js";
 import { sound } from '../data/sound.js';
+import End from './end.js';
 
 const Game = (_ => {
   const $hangman = document.querySelector('.hangman');
-  const letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+  const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
   const words = ['apple','dog','car','pizza','mango'];
   let chosenWord;
   let guessingWord;
@@ -41,7 +42,7 @@ const Game = (_ => {
     $hangman.addEventListener('click', event => {
       if(event.target.matches('.hangman__letter')) {
         sound.click.play()
-        check(event.target.innerHTML.toLowerCase())
+        check(event.target.innerHTML)
       }
       if(event.target.matches('.hangman__trigger')) {
         sound.click.play();
@@ -69,6 +70,26 @@ const Game = (_ => {
     }
     render()
     //check if game is over
+    isGameOver();
+  }
+
+  const hasWon = _ => guessingWord.join('') === chosenWord;
+  const hasLost = _ => lives <= 0;
+
+  const isGameOver = _ => {
+    if (hasWon()) {
+      sound.win.play();
+      End.setState({
+        chosenWord,
+        result: 'win'
+      });
+    } else if (hasLost()) {
+      sound.lose.play();
+      End.setState({
+        chosenWord,
+        result: 'lose'
+      });
+    }
   }
 
   const createLetters = _ => {
@@ -95,8 +116,6 @@ const Game = (_ => {
       }
     });
   };
-
-
 
   const chooseWord = _ => {
     let randNum = Math.floor(Math.random() * words.length);
