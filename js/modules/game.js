@@ -2,6 +2,7 @@
 import Home from "./home.js";
 import { sound } from '../data/sound.js';
 import End from './end.js';
+import Board from "./board.js";
 
 const Game = (_ => {
   const $hangman = document.querySelector('.hangman');
@@ -19,6 +20,7 @@ const Game = (_ => {
     lives = 7;
     showInitPage();
     listeners();
+    Board.init();
   };
 
   const showInitPage = _ => {
@@ -29,7 +31,7 @@ const Game = (_ => {
       <h1 class='hangman__title'>Hangman</h1>
       <canvas class='hangman__board' height='155px'></canvas>
       <div class='hangman__word'>${guessingWord.join('')}</div>
-      <p class='hangman__instructions'> Pick a letter below to guess the whole word.</p>
+      <p class='hangman__instructions'>Pick a letter below to guess the whole word.</p>
       <ul class='hangman__letters'>
         ${createLetters()}
       </ul>
@@ -67,6 +69,7 @@ const Game = (_ => {
     } else {
       lives--;
       //render board
+      Board.setLives(lives);
     }
     render()
     //check if game is over

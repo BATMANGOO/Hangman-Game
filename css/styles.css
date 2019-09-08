@@ -102,7 +102,19 @@ body {
   padding: 1rem 1.8rem;
   font-family: var(--font-body-stack);
   color: var(--light-white);
+  /* text-align: center; */
+  text-decoration-style: none;
+  /* list-style-type: none; */
+}
+
+.intro {
+  text-transform: uppercase;
   text-align: center;
+  color: var(--light-yellow);
+}
+
+.spaced {
+  margin-top: 15px;
 }
 
 /* end screen */
